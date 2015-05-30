@@ -1,0 +1,22 @@
+<dom-module id="su-input">
+	<template>
+		<div class="input-field">
+			<i class="prefix"></i>
+			<input id="icon_prefix" type="{{kind}}" class="validate">
+			<label for="icon_prefix">{{headline}}</label>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: "su-input",
+			properties: {
+				headline: String,
+				kind: String,
+				icon: String
+			},
+			ready: function() {
+				if(this.icon) this.querySelector("i").className += " " + this.icon;
+			}
+		});
+	</script>
+</dom-module>

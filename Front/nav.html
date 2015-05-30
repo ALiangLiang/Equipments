@@ -1,0 +1,43 @@
+<dom-module id="su-nav">
+  <template>
+    <nav>
+			<div class="nav-wrapper">
+				<a href="{{logolink}}" class="brand-logo">{{logo}}</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<content select="li"></content>
+				</ul>
+			</div>
+		</nav>
+  </template>
+	<script>
+		Polymer({
+			is: "su-nav",
+			properties: {
+				logolink: String,
+				logo: String,
+				items: {
+          type: Array,
+          notify: true,
+          reflectToAttribute: true,
+          observer: 'itemsChanged'
+         }
+			},
+			itemsChanged: function() {
+        var fragment = document.createDocumentFragment();
+				var items = this.items;
+        this.querySelector("#nav-mobile").innerHTML = "";
+				for(var i in items) {
+					var li = document.createElement("li");
+					var a = document.createElement("a");
+					a.href = items[i][0];
+					a.innerText = items[i][1];
+					if(items[i][2]) a.className = items[i][2];
+					li.appendChild(a);
+					fragment.appendChild(li);
+				}
+        this.querySelector("#nav-mobile").appendChild(fragment);
+        $('.modal-trigger').leanModal();
+			}
+		});
+	</script>
+</dom-module>

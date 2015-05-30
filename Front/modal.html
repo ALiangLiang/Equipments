@@ -1,0 +1,56 @@
+<dom-module id="su-modal">
+	<template>
+		<div id="{{nick}}" class="modal">
+    <content></content>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: "su-modal",
+			properties: {
+				nick: String
+			},
+			ready: function() {
+				this.children[0].href = "#" + this.nick;
+				var modalCloss = this.querySelectorAll(".modal-close");
+				for(var i in modalCloss) modalCloss[i].href = "#!";
+			}
+		});
+	</script>
+</dom-module>
+
+<dom-module id="su-modal-content">	
+	<template>
+		<div class="modal-content">
+			<h4>{{headline}}</h4>
+			<content></content>
+		</div>
+	</template>
+	<script>
+		Polymer({
+      is: "su-modal-content",
+			properties: {
+				headline: String
+			}
+    });
+	</script>
+</dom-module>
+
+<dom-module id="su-modal-footer">	
+	<template>
+    <div class="modal-footer">
+      <content></content>
+    </div>
+  </template>
+	<script>
+		Polymer({
+			is: "su-modal-footer",
+			properties: {
+				btnevent: Function
+			},
+			ready: function() {
+        this.querySelector("a").onclick = function(){this.btnevent()}.bind(this);
+			}
+		});
+	</script>
+</dom-module>

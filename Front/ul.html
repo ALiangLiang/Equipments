@@ -1,0 +1,129 @@
+<dom-module id="su-ul">
+  <style>
+  .collapsible-body p {
+    padding: 1rem;
+  }
+  </style>
+	<template>
+    <ul class="collapsible popout" data-collapsible="expandable">
+			<li>
+				<div class="collapsible-header #a5d6a7 green lighten-3">
+          <i class="mdi-av-volume-up"></i>TOYA
+        </div>
+				<div class="collapsible-body">
+          <p>
+            <input type="checkbox" id="test5" />
+            <label for="test5">TOYA</label>
+          </p>
+        </div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="mdi-communication-message"></i>海報架</div>
+				<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="mdi-image-flash-on"></i>滾筒</div>
+				<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+				<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="mdi-image-wb-sunny"></i>探燈</div>
+				<div class="collapsible-body"><p>LED探燈</p></div>
+				<div class="collapsible-body"><p>鹵素探燈</p></div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="mdi-image-wb-sunny"></i>探燈架</div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="mdi-av-mic"></i>MIC</div>
+				<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+				<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="mdi-action-settings-input-component"></i>MIC線</div>
+				<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+				<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="mdi-action-settings-input-component"></i>2.5(公)轉3.5(公)</div>
+				<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+				<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="mdi-maps-local-shipping"></i>推車</div>
+				<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+				<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+			</li>
+			<li>
+				<div class="collapsible-header"><i class="mdi-device-storage"></i>梯子</div>
+				<div class="collapsible-body"><p>斜靠梯</p></div>
+				<div class="collapsible-body"><p>Lorem ipsum dolor sit amet.</p></div>
+			</li>
+		</ul>
+	</template>
+  <script>
+		Polymer({
+      is: "su-ul",
+			properties: {
+        items: {
+          type: Array,
+          observer: 'listChanged'
+         }
+			},
+			ready: function() {
+        document.createElement("div");
+        document.createElement("div");
+				$('.collapsible').collapsible({
+					expandable : true 
+				});
+			},
+      listChanged: function(){
+        function cE() {
+          
+        }
+        console.log(this.items);
+        var div = document.createElement("div");
+        div.className = "collapsible-header";
+        const header = div;
+        var items = this.items;
+        for(var i in items) {
+          var li = document.createElement("li");
+          li.appendChild(div.cloneNode());
+        console.log(li);
+        }
+      }
+    });
+    window.Fields.addDate = function() {
+      
+    }
+	</script>
+</dom-module>
+
+<dom-module id="su-ul-li">
+  <template>
+    <li>
+      <div class="collapsible-header #a5d6a7 green lighten-3">
+        <i class="mdi-av-volume-up"></i>TOYA
+      </div>
+      <div class="collapsible-body">
+        <p>
+          <input type="checkbox" id="test5" />
+          <label for="test5">TOYA</label>
+        </p>
+      </div>
+    </li>
+  </template>
+  <script>
+    Polymer({
+      is: "su-ul-li",
+			properties: {
+        items: {
+          type: Array,
+          observer: 'listChanged'
+         }
+			},
+			ready: function() {
+      }
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="../bower_components/materialize/dist/js/materialize.js"></script>
+		<link rel="import" href="../bower_components/polymer/polymer.html">
+		<link rel="import" href="nav.html">
+		<link rel="import" href="modal.html">
+		<link rel="import" href="input.html">
+		<link rel="import" href="ul.html">
+		<link rel="import" href="content.html">
+		<link type="text/css" rel="stylesheet" href="../bower_components/materialize/dist/css/materialize.min.css"  media="screen,projection"/>
+    <style>
+      html {
+        font-family:  sans-serif;
+      }
+    </style>
+  </head>
+	<body>
+		<su-nav id="nav" logo="活動中心 - 器材借用系統" logolink="#" items='[["regist.html", "註冊"], ["#loginModal", "登入", "modal-trigger"]]'></su-nav>
+		<su-modal nick="loginModal">
+			<su-modal-content headline="登入">
+				<su-input headline="社團代號" kind="text" icon="mdi-action-account-circle"></su-input>
+				<su-input headline="密　　碼" kind="password" icon="mdi-action-lock-open"></su-input>
+			</su-modal-content>
+			<su-modal-footer btnEvent='login()'>
+				<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">登入</a>
+			</su-modal-footer>
+		</su-modal>
+		<su-content>
+			<su-ul id="list">
+			</su-ul>
+		</su-content>
+    <script>
+      var menu = [{
+        icon: "mdi-av-volume-up",
+        name: "TOYA",
+        items: [{
+          name: "TOYA",
+          has: true
+        }]
+      }, {
+        icon: "mdi-communication-message",
+        name: "海報架",
+        items: [{
+          name: "海報架-1",
+          has: true
+        }, {
+          name: "海報架-2",
+          has: true
+        }]
+      }, {
+        icon: "mdi-image-flash-on",
+        name: "滾筒",
+        items: [{
+          name: "滾筒-1",
+          has: true
+        }, {
+          name: "滾筒-2",
+          has: true
+        }]
+      }, {
+        icon: "mdi-image-wb-sunny",
+        name: "探燈",
+        items: [{
+          name: "LED探燈",
+          has: true
+        }, {
+          name: "鹵素探燈",
+          has: true
+        }]
+      }, {
+        icon: "mdi-image-wb-sunny",
+        name: "探燈架",
+        items: [{
+          name: "探燈架-1",
+          has: true
+        }, {
+          name: "探燈架-2",
+          has: true
+        }]
+      }, {
+        icon: "mdi-av-mic",
+        name: "MIC",
+        items: [{
+          name: "MIC-1",
+          has: true
+        }, {
+          name: "MIC-2",
+          has: true
+        }]
+      }, {
+        icon: "mdi-action-settings-input-component",
+        name: "MIC線",
+        items: [{
+          name: "MIC線-1",
+          has: true
+        }, {
+          name: "MIC線-2",
+          has: true
+        }]
+      }, {
+        icon: "mdi-action-settings-input-component",
+        name: "2.5(公)轉3.5(公)",
+        items: [{
+          name: "2.5(公)轉3.5(公)-1",
+          has: true
+        }, {
+          name: "2.5(公)轉3.5(公)-2",
+          has: true
+        }]
+      }, {
+        icon: "mdi-maps-local-shipping",
+        name: "推車",
+        items: [{
+          name: "推車",
+          has: true
+        }]
+      }, {
+        icon: "mdi-device-storage",
+        name: "梯子",
+        items: [{
+          name: "斜靠梯",
+          has: true
+        }, {
+          name: "梯子",
+          has: true
+        }]
+      }];
+      document.getElementById("list").setAttribute("items", JSON.stringify(menu));
+    </script>
+	</body>
+<html>
