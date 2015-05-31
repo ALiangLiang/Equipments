@@ -1,39 +1,73 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="import" href="../bower_components/polymer/polymer.html">
     <link rel="import" href="../bower_components/paper-input/paper-input.html">
     <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
     <link rel="import" href="../bower_components/paper-material/paper-material.html">
     <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+    <link rel="import" href="../bower_components/paper-button/paper-button.html">
+    <link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
+    <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+    <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+    <link rel="import" href="../bower_components/iron-icons/av-icons.html">
+    <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="../bower_components/iron-icons/image-icons.html">
+    <link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+    <link rel="import" href="../bower_components/iron-icons/maps-icons.html">
+    <link rel="import" href="../bower_components/iron-icons/device-icons.html">
     <link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
     <link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
+    <link rel="import" href="list.html">
     <style>
-      body {
-        margin: 0px
-      }
+        body {
+            margin: 0px
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <paper-toolbar>
-      <paper-icon-button icon="menu" on-tap="menuAction"></paper-icon-button>
-      <div title>Title</div>
-      <paper-icon-button icon="more" on-tap="moreAction"></paper-icon-button>
+        <paper-icon-button icon="menu" on-tap="menuAction"></paper-icon-button>
+        <div title>活動中心 - 器材借用系統</div>
+        <paper-icon-button icon="more" on-tap="moreAction"></paper-icon-button>
+        <paper-button tabindex="0" role="button" aria-disabled="false" class="x-scope paper-button-0">
+            <paper-ripple class="style-scope paper-button">
+                <div id="background" class="style-scope paper-ripple" style="opacity: 0;"></div>
+                <div id="waves" class="style-scope paper-ripple"></div>
+            </paper-ripple>
+            <paper-material animated="" class="content  style-scope paper-button x-scope paper-material-0" elevation="0">
+                button
+            </paper-material>
+        </paper-button>
+        <paper-button data-dialog="login" tabindex="0" role="button" aria-disabled="false" class="x-scope paper-button-0">
+            <paper-ripple class="style-scope paper-button">
+                <div id="background" class="style-scope paper-ripple" style="opacity: 0;"></div>
+                <div id="waves" class="style-scope paper-ripple"></div>
+            </paper-ripple>
+            <paper-material animated="" class="content  style-scope paper-button x-scope paper-material-0" elevation="0">
+                登入
+            </paper-material>
+        </paper-button>
     </paper-toolbar>
+
+    <div style="border:1px;width:7%;height:30px;float:left;border-color: gray;"></div>
+    <equipments-list></equipments-list>
+
     <paper-material elevation="1">
-      <paper-input label="Your name here"></paper-input>
     </paper-material>
-    <paper-dialog entry-animation="scale-up-animation" exit-animation="fade-out-animation" style="position:fixed;top:30px;right:30px">
-      <h2>Header</h2>
-      <paper-dialog-scrollable>
-        Lorem ipsum...
-      </paper-dialog-scrollable>
-      <div class="buttons">
-        <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm>Accept</paper-button>
-      </div>
+    <paper-dialog id="login" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+        <h2>Header</h2>
+        <paper-dialog-scrollable>
+            <paper-input label="Your name here"></paper-input>
+        </paper-dialog-scrollable>
+        <div class="buttons">
+            <paper-button dialog-dismiss>Cancel</paper-button>
+            <paper-button dialog-confirm>Accept</paper-button>
+        </div>
     </paper-dialog>
-  </body>
-  <html>
+</body>
+<html>
