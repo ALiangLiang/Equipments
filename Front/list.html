@@ -1,126 +1,138 @@
+<dom-module id="equipments-item">
+    <template>
+        <div class="heading list-btn">
+            <iron-icon icon="{{item.icon}}">
+            </iron-icon>{{item.name}}</div>
+        <iron-collapse>
+            <template is="dom-repeat" items="{{item.items}}" as="items">
+                <paper-checkbox role="checkbox">
+                    <div>{{items.name}}</div>
+                </paper-checkbox>
+            </template>
+        </iron-collapse>
+    </template>
+    <script>
+        Polymer({
+            is: 'equipments-item',
+            properties: {
+                item: String
+            },
+            ready: function () {
+                var btn = this.querySelector(".heading");
+                btn.onclick = function () {
+                    this.nextSibling.nextSibling.toggle();
+                }
+            }
+        });
+    </script>
+</dom-module>
+
 <dom-module id="equipments-list">
     <template>
-        <template is="dom-repeat" items="{{menu}}">
-            <div class="heading list-btn" target="{{item.id}}">
-                <iron-icon icon="{{item.icon}}"></iron-icon>
-                {{item.name}}
-            </div>
-            <iron-collapse target="{{item.id}}">
-                <template is=" dom-repeat " items="{{item.items}} " as="item ">
-                    <div>{{item.name}}</div>
-                </template>
-            </iron-collapse>
+        <template is="dom-repeat" items="{{menu}}" as="item">
+            <equipments-item item="{{item}}"></equipments-item>
         </template>
-        <iron-ajax auto verbose url="http://gdata.youtube.com/feeds/api/videos/ " params='{"alt ":"json ", "q ":"chrome "}' handle-as="json " on-response="handleResponse " debounce-duration="3000 "></iron-ajax>
+        <iron-ajax auto verbose url="http://gdata.youtube.com/feeds/api/videos/" params='{"alt ":"json ", "q ":"chrome "}' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
     </template>
     <script>
         Polymer({
             is: 'equipments-list',
-            ready: function () {
-                var btns = this.querySelectorAll(".list-btn ");
-                for (var i in btns) {
-                    btns[i].onclick = function () {
-                        var target = btns[i].target;
-                        document.querySelector('#collapse1 [target=' + target + ']').toggle()
-                    }
-                }
-            },
+            ready: function () {},
             handleResponse: function (e) {
-                console.log(e);
                 this.menu = [
                     {
-                        id: 0,
-                        icon: "av:volume-up ",
-                        name: "TOYA ",
+                        id: "0",
+                        icon: "av:volume-up",
+                        name: "TOYA",
                         items: [
                             {
-                                name: "TOYA ",
+                                name: "TOYA",
                                 has: true
                         }
                     ]
                 },
                     {
                         id: 1,
-                        icon: "communication:message ",
-                        name: "海報架 ",
+                        icon: "communication:message",
+                        name: "海報架",
                         items: [
                             {
-                                name: "海報架-1 ",
+                                name: "海報架-1",
                                 has: true
                         },
                             {
-                                name: "海報架-2 ",
+                                name: "海報架-2",
                                 has: true
                         }
                     ]
                 },
                     {
                         id: 2,
-                        icon: "image:flash-on ",
-                        name: "滾筒 ",
+                        icon: "image:flash-on",
+                        name: "滾筒",
                         items: [
                             {
-                                name: "滾筒-1 ",
+                                name: "滾筒-1",
                                 has: true
                         },
                             {
-                                name: "滾筒-2 ",
+                                name: "滾筒-2",
                                 has: true
                         }
                     ]
                 },
                     {
                         id: 3,
-                        icon: "image:wb-sunny ",
-                        name: "探燈 ",
+                        icon: "image:wb-sunny",
+                        name: "探燈",
                         items: [
                             {
-                                name: "LED探燈 ",
+                                name: "LED探燈",
                                 has: true
                         },
                             {
-                                name: "鹵素探燈 ",
+                                name: "鹵素探燈",
                                 has: true
                         }
                     ]
                 },
                     {
                         id: 4,
-                        icon: "image:wb-sunny ",
-                        name: "探燈架 ",
+                        icon: "image:wb-sunny",
+                        name: "探燈架",
                         items: [
                             {
-                                name: "探燈架-1 ",
+                                name: "探燈架-1",
                                 has: true
                         },
                             {
-                                name: "探燈架-2 ",
+                                name: "探燈架-2",
                                 has: true
                         }
                     ]
                 },
                     {
                         id: 5,
-                        icon: "av:mic ",
-                        name: "MIC ",
+                        icon: "av:mic",
+                        name: "MIC",
                         items: [
                             {
-                                name: "MIC-1 ",
+                                name: "MIC-1",
                                 has: true
                         },
                             {
-                                name: "MIC-2 ",
+                                name: "MIC-2",
                                 has: true
                         }
                     ]
                 },
                     {
                         id: 6,
-                        icon: "icons:settings-input-component ",
-                        name: "MIC線 ",
+                        icon: "icons:settings-input-component",
+                        name: "MIC線",
                         items: [
                             {
-                                name: "MIC線-1 ",
+                                name: "MIC線-1",
                                 has: true
                         },
                             {
@@ -131,41 +143,41 @@
                 },
                     {
                         id: 7,
-                        icon: "icons:settings-input-component ",
-                        name: "2.5(公)轉3.5(公) ",
+                        icon: "icons:settings-input-component",
+                        name: "2.5(公)轉3.5(公)",
                         items: [
                             {
-                                name: "2.5(公)轉3.5(公)-1 ",
+                                name: "2.5(公)轉3.5(公)-1",
                                 has: true
                         },
                             {
-                                name: "2.5(公)轉3.5(公)-2 ",
+                                name: "2.5(公)轉3.5(公)-2",
                                 has: true
                         }
                     ]
                 },
                     {
                         id: 8,
-                        icon: "maps:local-shipping ",
-                        name: "推車 ",
+                        icon: "maps:local-shipping",
+                        name: "推車",
                         items: [
                             {
-                                name: "推車 ",
+                                name: "推車",
                                 has: true
                         }
                     ]
                 },
                     {
                         id: 9,
-                        icon: "device:storage ",
-                        name: "梯子 ",
+                        icon: "device:storage",
+                        name: "梯子",
                         items: [
                             {
-                                name: "斜靠梯 ",
+                                name: "斜靠梯",
                                 has: true
                         },
                             {
-                                name: "梯子 ",
+                                name: "梯子",
                                 has: true
                         }
                     ]
