@@ -32,7 +32,7 @@
         <template is="dom-repeat" items="{{menu}}" as="item">
             <equipments-item item="{{item}}"></equipments-item>
         </template>
-        <iron-ajax auto verbose url="http://gdata.youtube.com/feeds/api/videos/" params='{"alt ":"json ", "q ":"chrome "}' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
+        <iron-ajax auto verbose url="http://gdata.youtube.com/feeds/api/videos/" lastresponse="{{menu}}" params='{"alt ":"json ", "q ":"chrome "}' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
     </template>
     <script>
         Polymer({
