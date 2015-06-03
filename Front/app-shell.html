@@ -1,0 +1,234 @@
+<dom-module>
+    <template id="app-shell">
+        <paper-drawer-panel peeking hasWillChange disable-edge-swipe disableEdgeSwipe force-narrow narrow right-drawer>
+            <div drawer>
+                <div>購物車</div>
+                <div id="cart-list">
+                    <template is="dom-repeat" items="{{items}}" as="items">
+                        <div>{{items}}</div>
+                    </template>
+                </div>
+            </div>
+            <div main>
+                <paper-toolbar>
+                    <paper-icon-button icon="menu" on-tap="menuAction"></paper-icon-button>
+                    <div title>學生會 - 器材借用系統</div>
+                    <paper-icon-button icon="more" on-tap="moreAction"></paper-icon-button>
+                    <paper-button id="cartBtn" tabindex="0" role="button" aria-disabled="false" class="x-scope paper-button-0">
+                        <paper-ripple class="style-scope paper-button">
+                            <div id="background" class="style-scope paper-ripple" style="opacity: 0;"></div>
+                            <div id="waves" class="style-scope paper-ripple"></div>
+                        </paper-ripple>
+                        <paper-material animated="" class="content  style-scope paper-button x-scope paper-material-0" elevation="0">
+                            <iron-icon icon="icons:shopping-cart"></iron-icon>
+                        </paper-material>
+                    </paper-button>
+                    <paper-button data-dialog="login" tabindex="0" role="button" aria-disabled="false" class="x-scope paper-button-0">
+                        <paper-ripple class="style-scope paper-button">
+                            <div id="background" class="style-scope paper-ripple" style="opacity: 0;"></div>
+                            <div id="waves" class="style-scope paper-ripple"></div>
+                        </paper-ripple>
+                        <paper-material id="btn-login" animated="" class="content style-scope paper-button x-scope paper-material-0" elevation="0">
+                            登入
+                        </paper-material>
+                    </paper-button>
+                </paper-toolbar>
+
+                <paper-material elevation="1"></paper-material>
+                <paper-dialog id="login" style="position:fixed" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+                    <div>
+                        <h2>登入</h2>
+                        <paper-dialog-scrollable>
+                            <paper-input label="帳號"></paper-input>
+                        </paper-dialog-scrollable>
+                        <paper-dialog-scrollable>
+                            <paper-input label="密碼"></paper-input>
+                        </paper-dialog-scrollable>
+                        <div class="buttons">
+                            <paper-button dialog-dismiss>取消</paper-button>
+                            <paper-button dialog-confirm>登入</paper-button>
+                        </div>
+                    </div>
+                </paper-dialog>
+                <!--<div style="border:1px;width:7%;height:30px;float:left;border-color: gray;"></div>-->
+                <template is="dom-repeat" items="{{menu}}" as="item">
+                    <div class="heading list-btn" onclick="this.nextSibling.nextSibling.toggle();">
+                        <iron-icon icon="{{item.icon}}">
+                        </iron-icon>{{item.name}}</div>
+                    <iron-collapse>
+                        <template is="dom-repeat" items="{{item.items}}" as="items">
+                            <paper-checkbox role="checkbox" checked="{{hostChecked::{{item.items}}}}">
+                                <div>{{items.name}}</div>
+                            </paper-checkbox>
+                        </template>
+                    </iron-collapse>
+                </template>
+                <iron-ajax auto verbose url="http://gdata.youtube.com/feeds/api/videos/" lastresponse="{{menu}}" params='{"alt ":"json ", "q ":"chrome "}' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
+            </div>
+        </paper-drawer-panel>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'app-shell',
+            properties: {},
+            ready: function () {
+                this.items = [1, 2, 3, 4, 5];
+                setTimeout(function () {
+                    this.items = [3, 3, 3, 3, 3, 3, 3, 3]
+                    console.log(this.items)
+                }, 3000)
+            },
+            hostChecked: function () {
+                console.log("change");
+            },
+            handleResponse: function (e) {
+                this.menu = [
+                    {
+                        id: "0",
+                        icon: "av:volume-up",
+                        name: "TOYA",
+                        items: [
+                            {
+                                name: "TOYA",
+                                has: true
+                        }
+                    ]
+                },
+                    {
+                        id: 1,
+                        icon: "communication:message",
+                        name: "海報架",
+                        items: [
+                            {
+                                name: "海報架-1",
+                                has: true
+                        },
+                            {
+                                name: "海報架-2",
+                                has: true
+                        }
+                    ]
+                },
+                    {
+                        id: 2,
+                        icon: "image:flash-on",
+                        name: "滾筒",
+                        items: [
+                            {
+                                name: "滾筒-1",
+                                has: true
+                        },
+                            {
+                                name: "滾筒-2",
+                                has: true
+                        }
+                    ]
+                },
+                    {
+                        id: 3,
+                        icon: "image:wb-sunny",
+                        name: "探燈",
+                        items: [
+                            {
+                                name: "LED探燈",
+                                has: true
+                        },
+                            {
+                                name: "鹵素探燈",
+                                has: true
+                        }
+                    ]
+                },
+                    {
+                        id: 4,
+                        icon: "image:wb-sunny",
+                        name: "探燈架",
+                        items: [
+                            {
+                                name: "探燈架-1",
+                                has: true
+                        },
+                            {
+                                name: "探燈架-2",
+                                has: true
+                        }
+                    ]
+                },
+                    {
+                        id: 5,
+                        icon: "av:mic",
+                        name: "MIC",
+                        items: [
+                            {
+                                name: "MIC-1",
+                                has: true
+                        },
+                            {
+                                name: "MIC-2",
+                                has: true
+                        }
+                    ]
+                },
+                    {
+                        id: 6,
+                        icon: "icons:settings-input-component",
+                        name: "MIC線",
+                        items: [
+                            {
+                                name: "MIC線-1",
+                                has: true
+                        },
+                            {
+                                name: "MIC線-2 ",
+                                has: true
+                        }
+                    ]
+                },
+                    {
+                        id: 7,
+                        icon: "icons:settings-input-component",
+                        name: "2.5(公)轉3.5(公)",
+                        items: [
+                            {
+                                name: "2.5(公)轉3.5(公)-1",
+                                has: true
+                        },
+                            {
+                                name: "2.5(公)轉3.5(公)-2",
+                                has: true
+                        }
+                    ]
+                },
+                    {
+                        id: 8,
+                        icon: "maps:local-shipping",
+                        name: "推車",
+                        items: [
+                            {
+                                name: "推車",
+                                has: true
+                        }
+                    ]
+                },
+                    {
+                        id: 9,
+                        icon: "device:storage",
+                        name: "梯子",
+                        items: [
+                            {
+                                name: "斜靠梯",
+                                has: true
+                        },
+                            {
+                                name: "梯子",
+                                has: true
+                        }
+                    ]
+                }
+            ];
+            }
+        });
+    </script>
+</dom-module>

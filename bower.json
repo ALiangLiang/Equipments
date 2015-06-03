@@ -1,0 +1,8 @@
+{
+  "name": "polymer-project",
+  "dependencies": {
+    "paper-drawer-panel": "PolymerElements/paper-drawer-panel#1.0.0",
+    "paper-header-panel": "PolymerElements/paper-header-panel#1.0.0",
+    "paper-toolbar": "PolymerElements/paper-toolbar#1.0.0"
+  }
+}

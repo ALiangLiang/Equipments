@@ -27,6 +27,7 @@
     <link rel="import" href="../bower_components/neon-animation/animations/scale-up-animation.html">
     <link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
     <link rel="import" href="list.html">
+    <link rel="import" href="app-shell.html">
     <style>
         body {
             margin: 0px
@@ -37,56 +38,8 @@
 </head>
 
 <body>
-    <paper-toolbar>
-        <paper-icon-button icon="menu" on-tap="menuAction"></paper-icon-button>
-        <div title>學生會 - 器材借用系統</div>
-        <paper-icon-button icon="more" on-tap="moreAction"></paper-icon-button>
-        <paper-button id="cartBtn" tabindex="0" role="button" aria-disabled="false" class="x-scope paper-button-0">
-            <paper-ripple class="style-scope paper-button">
-                <div id="background" class="style-scope paper-ripple" style="opacity: 0;"></div>
-                <div id="waves" class="style-scope paper-ripple"></div>
-            </paper-ripple>
-            <paper-material animated="" class="content  style-scope paper-button x-scope paper-material-0" elevation="0">
-                <iron-icon icon="icons:shopping-cart"></iron-icon>
-            </paper-material>
-        </paper-button>
-        <paper-button data-dialog="login" tabindex="0" role="button" aria-disabled="false" class="x-scope paper-button-0">
-            <paper-ripple class="style-scope paper-button">
-                <div id="background" class="style-scope paper-ripple" style="opacity: 0;"></div>
-                <div id="waves" class="style-scope paper-ripple"></div>
-            </paper-ripple>
-            <paper-material id="btn-login" animated="" class="content style-scope paper-button x-scope paper-material-0" elevation="0">
-                登入
-            </paper-material>
-        </paper-button>
-    </paper-toolbar>
 
-    <div style="border:1px;width:7%;height:30px;float:left;border-color: gray;"></div>
-    <equipments-list></equipments-list>
-
-    <paper-material elevation="1">
-    </paper-material>
-    <paper-dialog id="login" style="position:fixed" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-        <div>
-            <h2>登入</h2>
-            <paper-dialog-scrollable>
-                <paper-input label="帳號"></paper-input>
-            </paper-dialog-scrollable>
-            <paper-dialog-scrollable>
-                <paper-input label="密碼"></paper-input>
-            </paper-dialog-scrollable>
-            <div class="buttons">
-                <paper-button dialog-dismiss>取消</paper-button>
-                <paper-button dialog-confirm>登入</paper-button>
-            </div>
-        </div>
-    </paper-dialog>
-
-    <paper-drawer-panel style="z-index:-1;" force-narrow narrow transition hasTransform right-drawer>
-        <div drawer> Drawer panel... </div>
-        <div main> Main panel... </div>
-    </paper-drawer-panel>
-
+    <app-shell></app-shell>
     <script>
         document.onload = function () {
             var items = document.getElementsByTagName("paper-checkbox");
