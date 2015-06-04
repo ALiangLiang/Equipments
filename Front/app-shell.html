@@ -2,15 +2,31 @@
     <template id="app-shell">
         <paper-drawer-panel peeking hasWillChange disable-edge-swipe disableEdgeSwipe force-narrow narrow right-drawer>
             <div drawer>
+                <paper-tabs selected="0">
+                    <paper-tab>TAB 1</paper-tab>
+                    <paper-tab>TAB 2</paper-tab>
+                </paper-tabs>
                 <div>購物車</div>
                 <div id="cart-list">
-                    <template is="dom-repeat" items="{{menu}}" as="item">
-                        <template is="dom-repeat" items="{{item.items}}" as="items">
-                            <template is="dom-if" if="{{items.checked}}">
-                                <div>{{items.name}}</div>
+                    <form id="shopping" is="iron-form" method="post" action="../Rear/shopping.php">
+                        <template is="dom-repeat" items="{{menu}}" as="item">
+                            <template is="dom-repeat" items="{{item.items}}" as="items">
+                                <template is="dom-if" if="{{items.checked}}">
+                                    <div>{{items.name}}</div>
+                                    <input type="hidden" name="cart[]" value="{{items.id}}" />
+                                </template>
                             </template>
                         </template>
-                    </template>
+                        <paper-button raised onclick='document.querySelector("#shopping").submit()'>
+                            <paper-ripple class="style-scope paper-button">
+                                <div id="background" class="style-scope paper-ripple" style="opacity: 0;"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                            <paper-material id="btn-login" animated="" class="content style-scope paper-button x-scope paper-material-0" elevation="0">
+                                送出訂單
+                            </paper-material>
+                        </paper-button>
+                    </form>
                 </div>
                 <div>
                     <iron-ajax auto verbose url="index.html" lastresponse="{{menu}}" params='{"alt":"json", "q":"chrome"}' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
@@ -57,7 +73,9 @@
                         <paper-dialog-scrollable>
                             <paper-input name="studentID" label="負責人學號"></paper-input>
                         </paper-dialog-scrollable>
-                        <gold-phone-input name="phone" label="負責人電話" country-code="886" phone-number-pattern="XXXX-XXXXXX">
+                        <paper-dialog-scrollable>
+                            <gold-phone-input name="phone" label="負責人電話" country-code="886" phone-number-pattern="XXXX-XXXXXX">
+                        </paper-dialog-scrollable>
                         </gold-phone-input>
                         <div class="buttons">
                             <paper-button dialog-dismiss>取消</paper-button>
@@ -92,6 +110,9 @@
                 this.querySelector("#login").addEventListener("iron-form-submit", function (e) {
                     console.log(JSON.stringify(e.detail));
                 });
+                this.querySelector("#shopping").addEventListener("iron-form-submit", function (e) {
+                    console.log(JSON.stringify(e.detail));
+                });
             },
             handleResponse: function (e) {
                 this.menu = [
@@ -101,6 +122,7 @@
                         name: "TOYA",
                         items: [
                             {
+                                id: 0,
                                 name: "TOYA",
                                 has: true
                         }
@@ -112,6 +134,7 @@
                         name: "海報架",
                         items: [
                             {
+                                id: 1,
                                 name: "海報架-1",
                                 has: true
                         },
@@ -127,10 +150,12 @@
                         name: "滾筒",
                         items: [
                             {
+                                id: 2,
                                 name: "滾筒-1",
                                 has: true
                         },
                             {
+                                id: 3,
                                 name: "滾筒-2",
                                 has: true
                         }
@@ -142,10 +167,12 @@
                         name: "探燈",
                         items: [
                             {
+                                id: 4,
                                 name: "LED探燈",
                                 has: true
                         },
                             {
+                                id: 5,
                                 name: "鹵素探燈",
                                 has: true
                         }
@@ -157,10 +184,12 @@
                         name: "探燈架",
                         items: [
                             {
+                                id: 5,
                                 name: "探燈架-1",
                                 has: true
                         },
                             {
+                                id: 6,
                                 name: "探燈架-2",
                                 has: true
                         }
@@ -172,10 +201,12 @@
                         name: "MIC",
                         items: [
                             {
+                                id: 7,
                                 name: "MIC-1",
                                 has: true
                         },
                             {
+                                id: 8,
                                 name: "MIC-2",
                                 has: true
                         }
@@ -187,10 +218,12 @@
                         name: "MIC線",
                         items: [
                             {
+                                id: 9,
                                 name: "MIC線-1",
                                 has: true
                         },
                             {
+                                id: 10,
                                 name: "MIC線-2 ",
                                 has: true
                         }
@@ -202,10 +235,12 @@
                         name: "2.5(公)轉3.5(公)",
                         items: [
                             {
+                                id: 11,
                                 name: "2.5(公)轉3.5(公)-1",
                                 has: true
                         },
                             {
+                                id: 12,
                                 name: "2.5(公)轉3.5(公)-2",
                                 has: true
                         }
@@ -217,6 +252,7 @@
                         name: "推車",
                         items: [
                             {
+                                id: 13,
                                 name: "推車",
                                 has: true
                         }
@@ -228,10 +264,12 @@
                         name: "梯子",
                         items: [
                             {
+                                id: 14,
                                 name: "斜靠梯",
                                 has: true
                         },
                             {
+                                id: 15,
                                 name: "梯子",
                                 has: true
                         }
