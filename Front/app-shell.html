@@ -12,6 +12,9 @@
                         </template>
                     </template>
                 </div>
+                <div>
+                    <iron-ajax auto verbose url="index.html" lastresponse="{{menu}}" params='{"alt":"json", "q":"chrome"}' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
+                </div>
             </div>
             <div main>
                 <paper-toolbar>
@@ -39,20 +42,28 @@
                 </paper-toolbar>
 
                 <paper-material elevation="1"></paper-material>
-                <paper-dialog id="login" style="position:fixed" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-                    <div>
+                <paper-dialog style="position:fixed" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+                    <form id="login" is="iron-form" method="post" action="../Rear/login.php">
                         <h2>登入</h2>
                         <paper-dialog-scrollable>
-                            <paper-input label="帳號"></paper-input>
+                            <paper-input name="account" label="帳號"></paper-input>
                         </paper-dialog-scrollable>
                         <paper-dialog-scrollable>
-                            <paper-input label="密碼"></paper-input>
+                            <paper-input name="password" label="密碼"></paper-input>
                         </paper-dialog-scrollable>
+                        <paper-dialog-scrollable>
+                            <paper-input name="name" label="負責人姓名"></paper-input>
+                        </paper-dialog-scrollable>
+                        <paper-dialog-scrollable>
+                            <paper-input name="studentID" label="負責人學號"></paper-input>
+                        </paper-dialog-scrollable>
+                        <gold-phone-input name="phone" label="負責人電話" country-code="886" phone-number-pattern="XXXX-XXXXXX">
+                        </gold-phone-input>
                         <div class="buttons">
                             <paper-button dialog-dismiss>取消</paper-button>
-                            <paper-button dialog-confirm>登入</paper-button>
+                            <paper-button dialog-confirm onclick="document.querySelector('#login').submit()">登入</paper-button>
                         </div>
-                    </div>
+                    </form>
                 </paper-dialog>
                 <!--<div style="border:1px;width:7%;height:30px;float:left;border-color: gray;"></div>-->
                 <template is="dom-repeat" items="{{menu}}" as="item">
@@ -78,14 +89,9 @@
             is: 'app-shell',
             properties: {},
             ready: function () {
-                this.items = [1, 2, 3, 4, 5];
-                setTimeout(function () {
-                    this.items = [3, 3, 3, 3, 3, 3, 3, 3];
-                    console.log(this.check);
-                }.bind(this), 3000);
-            },
-            checkbox: function () {
-                console.log(this.menu);
+                this.querySelector("#login").addEventListener("iron-form-submit", function (e) {
+                    console.log(JSON.stringify(e.detail));
+                });
             },
             handleResponse: function (e) {
                 this.menu = [
