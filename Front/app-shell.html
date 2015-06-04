@@ -4,8 +4,12 @@
             <div drawer>
                 <div>購物車</div>
                 <div id="cart-list">
-                    <template is="dom-repeat" items="{{items}}" as="items">
-                        <div>{{items}}</div>
+                    <template is="dom-repeat" items="{{menu}}" as="item">
+                        <template is="dom-repeat" items="{{item.items}}" as="items">
+                            <template is="dom-if" if="{{items.checked}}">
+                                <div>{{items.name}}</div>
+                            </template>
+                        </template>
                     </template>
                 </div>
             </div>
@@ -57,19 +61,13 @@
                         </iron-icon>{{item.name}}</div>
                     <iron-collapse>
                         <template is="dom-repeat" items="{{item.items}}" as="items">
-                            <paper-checkbox role="checkbox" checked="{{hostChecked::change}}">
+                            <paper-checkbox role="checkbox" checked="{{items.checked}}" on-change="checkbox">
                                 <div>{{items.name}}</div>
                             </paper-checkbox>
                         </template>
                     </iron-collapse>
                 </template>
-                <paper-checkbox role="checkbox" checked="{{hostChecked::change}}">
-                    <div>1</div>
-                </paper-checkbox>
-                <paper-checkbox role="checkbox" checked="{{hostChecked2::change2}}">
-                    <div>2</div>
-                </paper-checkbox>
-                <iron-ajax auto verbose url="http://gdata.youtube.com/feeds/api/videos/" lastresponse="{{menu}}" params='{"alt ":"json ", "q ":"chrome "}' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
+                <iron-ajax auto verbose url="index.html" lastresponse="{{menu}}" params='{"alt":"json", "q":"chrome"}' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
             </div>
         </paper-drawer-panel>
 
@@ -82,13 +80,12 @@
             ready: function () {
                 this.items = [1, 2, 3, 4, 5];
                 setTimeout(function () {
-                    this.items = [3, 3, 3, 3, 3, 3, 3, 3]
-                    console.log(this.hostChecked);
-                    console.log(this.change)
-                }, 3000)
+                    this.items = [3, 3, 3, 3, 3, 3, 3, 3];
+                    console.log(this.check);
+                }.bind(this), 3000);
             },
-            change2: function () {
-                console.log("change");
+            checkbox: function () {
+                console.log(this.menu);
             },
             handleResponse: function (e) {
                 this.menu = [
