@@ -1,11 +1,33 @@
 <dom-module>
+    <style>
+        .heading {
+            padding: 10px 15px;
+            margin-top: 20px;
+            background-color: #f3f3f3;
+            border: 1px solid #dedede;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            width: 100%;
+            text-align: left;
+        }
+        
+        .content {
+            padding: 15px;
+            border: 1px solid #dedede;
+            border-top: none;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+    </style>
+
     <template id="app-shell">
+
         <paper-drawer-panel peeking hasWillChange disable-edge-swipe disableEdgeSwipe force-narrow narrow right-drawer>
-            <div drawer>
-                <paper-tabs selected="0">
-                    <paper-tab>TAB 1</paper-tab>
-                    <paper-tab>TAB 2</paper-tab>
-                </paper-tabs>
+            <div drawer style="top:64px">
+                <paper-toolbar></paper-toolbar>
                 <div>購物車</div>
                 <div id="cart-list">
                     <form id="shopping" is="iron-form" method="post" action="../Rear/shopping.php">
@@ -28,11 +50,10 @@
                         </paper-button>
                     </form>
                 </div>
-                <div>
-                    <iron-ajax auto verbose url="index.html" lastresponse="{{menu}}" params='' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
-                </div>
+                <iron-ajax auto verbose url="index.html" lastresponse="{{menu}}" params='' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
             </div>
-            <div main>
+
+            <div main style="top:64px">
                 <paper-toolbar>
                     <paper-icon-button icon="menu" on-tap="menuAction"></paper-icon-button>
                     <div title>學生會 - 器材借用系統</div>
@@ -54,28 +75,46 @@
                         <paper-material id="btn-login" animated="" elevation="1">登入</paper-material>
                     </paper-button>
                 </paper-toolbar>
-
                 <paper-material elevation="1"></paper-material>
                 <paper-dialog style="position:fixed" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-                    <form id="login" is="iron-form" method="post" action="../Rear/login.php">
-                        <h2>登入</h2>
-                        <paper-input name="account" label="帳號"></paper-input>
-                        <paper-input name="password" label="密碼"></paper-input>
-                        <paper-input name="name" label="負責人姓名"></paper-input>
-                        <paper-input name="studentID" label="負責人學號"></paper-input>
-                        <gold-phone-input name="phone" label="負責人電話" country-code="886" phone-number-pattern="XXXX-XXXXXX"></gold-phone-input>
-                        <div class="buttons">
-                            <paper-button dialog-dismiss>取消</paper-button>
-                            <paper-button dialog-confirm onclick="document.querySelector('#login').submit()">登入</paper-button>
+                    <paper-tabs selected="{{selectTab}}">
+                        <paper-tab>社團登入</paper-tab>
+                        <paper-tab>學生會登入</paper-tab>
+                    </paper-tabs>
+                    <iron-pages selected="{{selectTab}}">
+                        <div>
+                            <form is="iron-form" method="post" action="../Rear/login.php">
+                                <h2>社團登入</h2>
+                                <paper-input name="account" label="帳號"></paper-input>
+                                <paper-input name="password" label="密碼"></paper-input>
+                                <paper-input name="name" label="負責人姓名"></paper-input>
+                                <paper-input name="studentID" label="負責人學號"></paper-input>
+                                <gold-phone-input name="phone" label="負責人電話" country-code="886" phone-number-pattern="XXXX-XXXXXX"></gold-phone-input>
+                                <div class="buttons">
+                                    <paper-button dialog-dismiss>取消</paper-button>
+                                    <paper-button dialog-confirm onclick="this.parentNode.parentNode.submit()">登入</paper-button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                        <div>
+                            <form is="iron-form" method="post" action="../Rear/login.php">
+                                <h2>學生會登入</h2>
+                                <paper-input name="account" label="帳號"></paper-input>
+                                <paper-input name="password" label="密碼"></paper-input>
+                                <div class="buttons">
+                                    <paper-button dialog-dismiss>取消</paper-button>
+                                    <paper-button dialog-confirm onclick="this.parentNode.parentNode.submit()">登入</paper-button>
+                                </div>
+                            </form>
+                        </div>
+                    </iron-pages>
                 </paper-dialog>
-                <!--<div style="border:1px;width:7%;height:30px;float:left;border-color: gray;"></div>-->
+
                 <template is="dom-repeat" items="{{menu}}" as="item">
                     <div class="heading list-btn" onclick="this.nextSibling.nextSibling.toggle();">
                         <iron-icon icon="{{item.icon}}">
                         </iron-icon>{{item.name}}</div>
-                    <iron-collapse>
+                    <iron-collapse class="content">
                         <template is="dom-repeat" items="{{item.items}}" as="items">
                             <paper-checkbox role="checkbox" checked="{{items.checked}}" on-change="checkbox">
                                 <div>{{items.name}}</div>
@@ -85,6 +124,7 @@
                 </template>
                 <iron-ajax id="ajax" auto verbose url="../Rear/Equipments.php" last-response="{{menu}}" params='' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
             </div>
+        </paper-drawer-panel>
 
     </template>
 
@@ -93,12 +133,10 @@
             is: 'app-shell',
             properties: {},
             ready: function () {
-                this.querySelector("#login").addEventListener("iron-form-submit", function (e) {
-                    console.log(JSON.stringify(e.detail));
-                });
                 this.querySelector("#shopping").addEventListener("iron-form-submit", function (e) {
                     console.log(JSON.stringify(e.detail));
                 });
+                this.selectTab = 0;
             },
             handleResponse: function (e) {}
         });
