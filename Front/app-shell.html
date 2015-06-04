@@ -29,7 +29,7 @@
                     </form>
                 </div>
                 <div>
-                    <iron-ajax auto verbose url="index.html" lastresponse="{{menu}}" params='{"alt":"json", "q":"chrome"}' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
+                    <iron-ajax auto verbose url="index.html" lastresponse="{{menu}}" params='' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
                 </div>
             </div>
             <div main>
@@ -100,11 +100,7 @@
                     console.log(JSON.stringify(e.detail));
                 });
             },
-            handleResponse: function (e) {
-                console.log(this.querySelector("#ajax").lastResponse);
-                console.log(this.menu)
-
-            }
+            handleResponse: function (e) {}
         });
     </script>
 </dom-module>
