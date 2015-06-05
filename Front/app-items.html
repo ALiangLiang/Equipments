@@ -1,0 +1,29 @@
+<dom-module>
+    <style>
+        .item {
+            color: #4285f4;
+            position: relative;
+            height: 48px;
+            line-height: 48px;
+            font-size: 0.9em;
+            padding: 0 16px;
+        }
+    </style>
+    <template id="app-items">
+        <div class="item">
+            <div fit>{{name}}</div>
+            <paper-ripple recenters center></paper-ripple>
+        </div>
+        <input type="hidden" name="cart[]" value="{{id}}" />
+    </template>
+    <script>
+        Polymer({
+            is: 'app-items',
+            properties: {
+                name: "string",
+                id: "number"
+            },
+            ready: function () {}
+        });
+    </script>
+</dom-module>

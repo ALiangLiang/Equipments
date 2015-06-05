@@ -14,7 +14,7 @@
             text-align: left;
         }
         
-        .content {
+        .app-collapse {
             padding: 15px;
             border: 1px solid #dedede;
             border-top: none;
@@ -28,18 +28,22 @@
         <paper-drawer-panel style="top:64px" peeking hasWillChange disable-edge-swipe disableEdgeSwipe force-narrow narrow right-drawer>
             <div drawer>
                 <!--借用清單-->
-                <div>購物車</div>
+                <paper-toolbar class="flex" style="background: #fafafa;color:#666;;">
+                    <div class="paper-header">
+                        <iron-icon icon="icons:shopping-cart" style="margin-right: 15px;"></iron-icon>
+                        購物車
+                    </div>
+                </paper-toolbar>
                 <div id="cart-list">
                     <form id="shopping" is="iron-form" method="post" action="../Rear/shopping.php">
                         <template is="dom-repeat" items="{{menu}}" as="item">
                             <template is="dom-repeat" items="{{item.items}}" as="items">
                                 <template is="dom-if" if="{{items.checked}}">
-                                    <div>{{items.name}}</div>
-                                    <input type="hidden" name="cart[]" value="{{items.id}}" />
+                                    <app-items name="{{items.name}}" value="{{items.id}}"></app-items>
                                 </template>
                             </template>
                         </template>
-                        <paper-button raised onclick='document.querySelector("#shopping").submit()'>
+                        <paper-button style="margin-top:10px;background:#D81B60;color:white" raised onclick='document.querySelector("#shopping").submit()'>
                             送出訂單
                         </paper-button>
                     </form>
@@ -82,17 +86,19 @@
                     </iron-pages>
                 </paper-dialog>
                 <!--器材列表-->
-                <template is="dom-repeat" items="{{menu}}" as="item">
-                    <div class="heading list-btn" onclick="this.nextSibling.nextSibling.toggle();">
-                        <iron-icon icon="{{item.icon}}">
-                        </iron-icon>{{item.name}}</div>
-                    <iron-collapse class="content">
-                        <template is="dom-repeat" items="{{item.items}}" as="items">
-                            <paper-checkbox role="checkbox" disabled="{{!items.has}}" checked="{{items.checked}}" on-change="checkbox">{{items.name}}</paper-checkbox>
-                            <paper-toast id="toast" text='{{items.name}}'></paper-toast>
-                        </template>
-                    </iron-collapse>
-                </template>
+                <div style="padding:0 10px 0 10px">
+                    <template is="dom-repeat" items="{{menu}}" as="item">
+                        <div class="heading list-btn" onclick="this.nextSibling.nextSibling.toggle();">
+                            <iron-icon icon="{{item.icon}}">
+                            </iron-icon>{{item.name}}</div>
+                        <iron-collapse class="app-collapse">
+                            <template is="dom-repeat" items="{{item.items}}" as="items">
+                                <paper-checkbox role="checkbox" disabled="{{!items.has}}" checked="{{items.checked}}" on-change="checkbox">{{items.name}}</paper-checkbox>
+                                <paper-toast id="toast" text='{{items.name}}'></paper-toast>
+                            </template>
+                        </iron-collapse>
+                    </template>
+                </div>
                 <iron-ajax auto verbose url="../Rear/Equipments.php" last-response="{{menu}}" params='' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
             </div>
         </paper-drawer-panel>
