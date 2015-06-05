@@ -25,9 +25,9 @@
 
     <template id="app-shell">
 
-        <paper-drawer-panel peeking hasWillChange disable-edge-swipe disableEdgeSwipe force-narrow narrow right-drawer>
-            <div drawer style="top:64px">
-                <paper-toolbar></paper-toolbar>
+        <paper-drawer-panel style="top:64px" peeking hasWillChange disable-edge-swipe disableEdgeSwipe force-narrow narrow right-drawer>
+            <div drawer>
+                <!--借用清單-->
                 <div>購物車</div>
                 <div id="cart-list">
                     <form id="shopping" is="iron-form" method="post" action="../Rear/shopping.php">
@@ -40,42 +40,14 @@
                             </template>
                         </template>
                         <paper-button raised onclick='document.querySelector("#shopping").submit()'>
-                            <paper-ripple>
-                                <div id="background"></div>
-                                <div id="waves"></div>
-                            </paper-ripple>
-                            <paper-material id="btn-login" animated="" elevation="0">
-                                送出訂單
-                            </paper-material>
+                            送出訂單
                         </paper-button>
                     </form>
                 </div>
-                <iron-ajax auto verbose url="index.html" lastresponse="{{menu}}" params='' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
             </div>
 
-            <div main style="top:64px">
-                <paper-toolbar>
-                    <paper-icon-button icon="menu" on-tap="menuAction"></paper-icon-button>
-                    <div title>學生會 - 器材借用系統</div>
-                    <paper-icon-button icon="more" on-tap="moreAction"></paper-icon-button>
-                    <paper-button id="cartBtn">
-                        <paper-ripple>
-                            <div id="background"></div>
-                            <div id="waves"></div>
-                        </paper-ripple>
-                        <paper-material animated="" elevation="1">
-                            <iron-icon icon="icons:shopping-cart"></iron-icon>
-                        </paper-material>
-                    </paper-button>
-                    <paper-button data-dialog="login">
-                        <paper-ripple>
-                            <div id="background"></div>
-                            <div id="waves"></div>
-                        </paper-ripple>
-                        <paper-material id="btn-login" animated="" elevation="1">登入</paper-material>
-                    </paper-button>
-                </paper-toolbar>
-                <paper-material elevation="1"></paper-material>
+            <div main>
+                <!--登入介面-->
                 <paper-dialog style="position:fixed" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
                     <paper-tabs selected="{{selectTab}}">
                         <paper-tab>社團登入</paper-tab>
@@ -109,23 +81,21 @@
                         </div>
                     </iron-pages>
                 </paper-dialog>
-
+                <!--器材列表-->
                 <template is="dom-repeat" items="{{menu}}" as="item">
                     <div class="heading list-btn" onclick="this.nextSibling.nextSibling.toggle();">
                         <iron-icon icon="{{item.icon}}">
                         </iron-icon>{{item.name}}</div>
                     <iron-collapse class="content">
                         <template is="dom-repeat" items="{{item.items}}" as="items">
-                            <paper-checkbox role="checkbox" checked="{{items.checked}}" on-change="checkbox">
-                                <div>{{items.name}}</div>
-                            </paper-checkbox>
+                            <paper-checkbox role="checkbox" disabled="{{!items.has}}" checked="{{items.checked}}" on-change="checkbox">{{items.name}}</paper-checkbox>
+                            <paper-toast id="toast" text='{{items.name}}'></paper-toast>
                         </template>
                     </iron-collapse>
                 </template>
-                <iron-ajax id="ajax" auto verbose url="../Rear/Equipments.php" last-response="{{menu}}" params='' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
+                <iron-ajax auto verbose url="../Rear/Equipments.php" last-response="{{menu}}" params='' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
             </div>
         </paper-drawer-panel>
-
     </template>
 
     <script>
@@ -134,11 +104,18 @@
             properties: {},
             ready: function () {
                 this.querySelector("#shopping").addEventListener("iron-form-submit", function (e) {
-                    console.log(JSON.stringify(e.detail));
+
                 });
                 this.selectTab = 0;
             },
-            handleResponse: function (e) {}
+            handleResponse: function (e) {},
+            checkbox: function (e) {
+                if (e.target.checked)
+                    e.target.nextSibling.nextSibling.innerText = e.target.innerText + "　被加入器材清單";
+                else
+                    e.target.nextSibling.nextSibling.innerText = e.target.innerText + "　被移出器材清單";
+                e.path[0].nextSibling.nextSibling.show();
+            }
         });
     </script>
 </dom-module>
