@@ -1,0 +1,26 @@
+<dom-module>
+    <style>
+    </style>
+    <template id="app-icon-button">
+        <paper-icon-button on-click="changeStatus" icon="{{icon}}"></paper-icon-button>
+        <app-popover id="menu" direction="bottom">
+            <paper-header-panel>
+                <div class="popover-header paper-header">test</div>
+                <div class="fit">文字文字</div>
+            </paper-header-panel>
+        </app-popover>
+    </template>
+    <script>
+        Polymer({
+            is: 'app-icon-button',
+            properties: {
+                icon: String
+            },
+            behavier: [Polymer.PaperButtonBehavior],
+            ready: function () {},
+            changeStatus: function () {
+                this.$.menu.show()
+            }
+        });
+    </script>
+</dom-module>

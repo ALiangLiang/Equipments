@@ -1,0 +1,139 @@
+<dom-module>
+    <style>
+        #popover {
+            position: fixed;
+            border-radius: 5px;
+            border: 1px gray;
+            z-index: 99;
+            left: auto;
+            margin-left: 0px
+        }
+        
+        #popover::after {
+            content: '';
+            position: absolute;
+            display: inline-block;
+        }
+        
+        #popover.top#popover::after {
+            border-right: 7px solid transparent;
+            border-top: 7px solid #eee;
+            border-left: 7px solid transparent;
+            border-top-color: #4caf50;
+            left: 50%;
+            bottom: -7px;
+            z-index: 999;
+        }
+        
+        #popover.right#popover::after {
+            border-top: 7px solid transparent;
+            border-right: 7px solid #eee;
+            border-bottom: 7px solid transparent;
+            border-right-color: #4caf50;
+            left: -7px;
+            top: 50%;
+        }
+        
+        #popover.bottom#popover::after {
+            border-right: 7px solid transparent;
+            border-bottom: 7px solid #eee;
+            border-left: 7px solid transparent;
+            border-bottom-color: #4caf50;
+            left: 50%;
+            top: -7px;
+        }
+    </style>
+    <template id="app-popover">
+        <div id="popover" style="display:none">
+            <content></content>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'app-popover',
+            properties: {
+                direction: {
+                    type: String,
+                    observer: "director"
+                },
+                delay: {
+                    type: Number,
+                    value: 6000,
+                    notify: true,
+                    reflectToAttribute: true
+                },
+                animationConfig: {
+                    type: Object,
+                    value: function () {
+                        console.log(this);
+                        console.log(this.delay);
+                        return {
+                            'entry': {
+                                name: 'fade-in-animation',
+                                node: this.$.popover,
+                                timing: {
+                                    delay: this.delay,
+                                    duration: 130
+                                }
+                            }
+                        };
+                    }
+                }
+            },
+            behaviors: [
+                Polymer.NeonAnimatableBehavior,
+                Polymer.NeonAnimationRunnerBehavior
+            ],
+            ready: function () {
+                this.repositioning();
+            },
+            director: function () {
+                switch (this.direction) {
+                case "top":
+                    this.$.popover.classList.add("top");
+                    break;
+                default:
+                case "right":
+                    this.$.popover.classList.add("right");
+                    break;
+                case "bottom":
+                    this.$.popover.classList.add("bottom");
+                    break;
+                case "left":
+                    this.$.popover.classList.add("left");
+                    break;
+                }
+            },
+            repositioning: function () {
+                var onwerParentRoot = Polymer.dom(this).getOwnerRoot().host,
+                    rect = onwerParentRoot.getBoundingClientRect(),
+                    popover = this.$.popover;
+                switch (this.direction) {
+                case "top":
+                    popover.style.left = rect.left + "px";
+                    popover.style.top = rect.top - rect.height + "px";
+                    break;
+                default:
+                case "right":
+                    popover.style.left = rect.right + "px";
+                    popover.style.top = rect.top + "px";
+                    break;
+                case "bottom":
+                    popover.style.left = rect.left + "px";
+                    popover.style.top = rect.bottom + 7 + "px";
+                    break;
+                case "left":
+                    break;
+                }
+            },
+            show: function () {
+                this.repositioning();
+                this.$.popover.style.display = "block";
+                this.playAnimation("entry");
+            },
+            hide: function () {
+                this.$.popover.style.display = "none";
+            }
+        });
+    </script>
+</dom-module>

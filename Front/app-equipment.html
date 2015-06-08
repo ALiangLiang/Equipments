@@ -1,0 +1,76 @@
+<dom-module>
+    <style>
+        #equipment {
+            margin-right: 20px;
+            flex-direction: row;
+        }
+        
+        #super-contextmenu {
+            position: absolute;
+            z-index: 2147483647;
+            overflow: auto;
+            background: #fff;
+            border-radius: 2px;
+            list-style: none;
+            padding-left: 0px;
+            display: none;
+        }
+        
+        .popover-header {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            width: 100%;
+            text-align: left;
+        }
+    </style>
+    <template id="app-equipment">
+        <div id="equipment">
+            <paper-checkbox role="checkbox" disabled="{{!items.has}}" checked="{{items.checked}}" on-change="checkbox">{{items.name}}</paper-checkbox>
+            <paper-toast id="toast" text='{{items.name}}'></paper-toast>
+            <app-popover id="tip" direction="right" delay="6000">
+                <paper-header-panel>
+                    <div class="popover-header paper-header">{{items.name}}</div>
+                    <div class="fit">文字文字</div>
+                </paper-header-panel>
+            </app-popover>
+            <app-icon-button on-click="changeStatus" icon="av:loop"></app-icon-button>
+            <app-icon-button on-click="changeName" icon="editor:mode-edit"></app-icon-button>
+            <iron-ajax method="POST" url="" params='' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
+        </div>
+    </template>
+    <script>
+        Polymer({
+            is: 'app-equipment',
+            properties: {
+                items: Object,
+                superuser: {
+                    type: Boolean,
+                    notify: true,
+                    reflectToAttribute: true
+                }
+            },
+            ready: function () {
+                var root = Polymer.dom(this).node,
+                    target = this.$.tip;
+                root.onmouseenter = function () {
+                    target.show()
+                };
+                root.onmouseleave = function () {
+                    target.hide()
+                };
+            },
+            checkbox: function (e) {
+                if (e.target.checked)
+                    e.target.nextSibling.nextSibling.innerText = e.target.innerText + "　被加入器材清單";
+                else
+                    e.target.nextSibling.nextSibling.innerText = e.target.innerText + "　被移出器材清單";
+                e.path[0].nextSibling.nextSibling.show();
+            }
+        });
+    </script>
+</dom-module>

@@ -1,9 +1,9 @@
 <dom-module>
     <style>
         .heading {
-            padding: 10px 15px;
+            padding: 10px 15px 0 15px;
             margin-top: 20px;
-            background-color: #f3f3f3;
+            background-color: #FFE188;
             border: 1px solid #dedede;
             border-top-left-radius: 5px;
             border-top-right-radius: 5px;
@@ -20,6 +20,7 @@
             border-top: none;
             border-bottom-left-radius: 5px;
             border-bottom-right-radius: 5px;
+            display: flex;
         }
     </style>
 
@@ -43,9 +44,14 @@
                                 </template>
                             </template>
                         </template>
-                        <paper-button style="margin-top:10px;background:#D81B60;color:white" raised onclick='document.querySelector("#shopping").submit()'>
-                            送出訂單
-                        </paper-button>
+                        <div style="padding:0 24px 0 24px">
+                            <h4>請學生會執勤人員填寫帳密</h2>
+                            <paper-input name="account" label="帳號"></paper-input>
+                            <paper-input name="password" label="密碼" type="password"></paper-input>
+                            <paper-button style="margin-top:10px;background:#D81B60;color:white" raised onclick='document.querySelector("#shopping").submit()'>
+                                送出訂單
+                            </paper-button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -53,37 +59,20 @@
             <div main>
                 <!--登入介面-->
                 <paper-dialog style="position:fixed" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-                    <paper-tabs selected="{{selectTab}}">
-                        <paper-tab>社團登入</paper-tab>
-                        <paper-tab>學生會登入</paper-tab>
-                    </paper-tabs>
-                    <iron-pages selected="{{selectTab}}">
-                        <div>
-                            <form is="iron-form" method="post" action="../Rear/login.php">
-                                <h2>社團登入</h2>
-                                <paper-input name="account" label="帳號"></paper-input>
-                                <paper-input name="password" label="密碼"></paper-input>
-                                <paper-input name="name" label="負責人姓名"></paper-input>
-                                <paper-input name="studentID" label="負責人學號"></paper-input>
-                                <gold-phone-input name="phone" label="負責人電話" country-code="886" phone-number-pattern="XXXX-XXXXXX"></gold-phone-input>
-                                <div class="buttons">
-                                    <paper-button dialog-dismiss>取消</paper-button>
-                                    <paper-button dialog-confirm onclick="this.parentNode.parentNode.submit()">登入</paper-button>
-                                </div>
-                            </form>
-                        </div>
-                        <div>
-                            <form is="iron-form" method="post" action="../Rear/login.php">
-                                <h2>學生會登入</h2>
-                                <paper-input name="account" label="帳號"></paper-input>
-                                <paper-input name="password" label="密碼"></paper-input>
-                                <div class="buttons">
-                                    <paper-button dialog-dismiss>取消</paper-button>
-                                    <paper-button dialog-confirm onclick="this.parentNode.parentNode.submit()">登入</paper-button>
-                                </div>
-                            </form>
-                        </div>
-                    </iron-pages>
+                    <div>
+                        <form is="iron-form" method="post" action="../Rear/login.php">
+                            <h2>社團登入</h2>
+                            <paper-input name="account" label="帳號"></paper-input>
+                            <paper-input name="password" label="密碼" type="password"></paper-input>
+                            <paper-input name="name" label="負責人姓名"></paper-input>
+                            <paper-input name="studentID" label="負責人學號"></paper-input>
+                            <gold-phone-input name="phone" label="負責人電話" country-code="886" phone-number-pattern="XXXX-XXXXXX"></gold-phone-input>
+                            <div class="buttons">
+                                <paper-button dialog-dismiss>取消</paper-button>
+                                <paper-button dialog-confirm onclick="this.parentNode.parentNode.submit()">登入</paper-button>
+                            </div>
+                        </form>
+                    </div>
                 </paper-dialog>
                 <!--器材列表-->
                 <div style="padding:0 10px 0 10px">
@@ -93,8 +82,7 @@
                             </iron-icon>{{item.name}}</div>
                         <iron-collapse class="app-collapse">
                             <template is="dom-repeat" items="{{item.items}}" as="items">
-                                <paper-checkbox role="checkbox" disabled="{{!items.has}}" checked="{{items.checked}}" on-change="checkbox">{{items.name}}</paper-checkbox>
-                                <paper-toast id="toast" text='{{items.name}}'></paper-toast>
+                                <app-equipment  items="{{items}}"></app-equipment>
                             </template>
                         </iron-collapse>
                     </template>
@@ -102,6 +90,7 @@
                 <iron-ajax auto verbose url="../Rear/Equipments.php" last-response="{{menu}}" params='' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
             </div>
         </paper-drawer-panel>
+        <iron-meta key="superuser"></iron-meta>
     </template>
 
     <script>
@@ -113,15 +102,9 @@
 
                 });
                 this.selectTab = 0;
+                
             },
-            handleResponse: function (e) {},
-            checkbox: function (e) {
-                if (e.target.checked)
-                    e.target.nextSibling.nextSibling.innerText = e.target.innerText + "　被加入器材清單";
-                else
-                    e.target.nextSibling.nextSibling.innerText = e.target.innerText + "　被移出器材清單";
-                e.path[0].nextSibling.nextSibling.show();
-            }
+            handleResponse: function (e) {}
         });
     </script>
 </dom-module>

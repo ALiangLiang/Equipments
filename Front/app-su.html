@@ -1,0 +1,49 @@
+<dom-module>
+    <style>
+    </style>
+    <template id="app-su">
+        <template is="dom-if" if="{{superuser}}">
+        </template>
+    </template>
+    <script>
+        Polymer({
+            is: 'app-su',
+            properties: {
+                superuser: {
+                    type: Boolean,
+                    notify: true,
+                    reflectToAttribute: true,
+                    observer: "S"
+                }
+            },
+            ready: function () {
+                (function () {
+                    //EasterEgg
+                    var level = 0,
+                        secret = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+                    document.onkeydown = function (e) {
+                        if (e.which == secret[level]) {
+                            level++;
+                            if (level == secret.length) {
+                                level = 0;
+                                su();
+                            }
+                        } else {
+                            level = 0;
+                        }
+                    }
+
+                    function su() {
+                        var Super = document.querySelector("#super-login");
+                        Super.open();
+                        Super.addEventListener("keydown", function (e) {
+                            if (e.which == 13) Super.querySelector("#super-form").submit()
+                        });
+
+                        this.$.meta.byKey("superuser").setAttribute("superuser", "");
+                    }
+                })();
+            }
+        });
+    </script>
+</dom-module>
