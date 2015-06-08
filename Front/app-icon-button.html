@@ -1,13 +1,15 @@
 <dom-module>
     <style>
+        app-items > div {
+            background-color: #4caf50;
+            color: white !important;
+        }
     </style>
     <template id="app-icon-button">
         <paper-icon-button on-click="changeStatus" icon="{{icon}}"></paper-icon-button>
         <app-popover id="menu" direction="bottom">
-            <paper-header-panel>
-                <div class="popover-header paper-header">test</div>
-                <div class="fit">文字文字</div>
-            </paper-header-panel>
+            <app-items name="修改狀態"></app-items>
+            <app-items name="修改名稱"></app-items>
         </app-popover>
     </template>
     <script>
