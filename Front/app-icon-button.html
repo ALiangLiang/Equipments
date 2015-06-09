@@ -1,15 +1,33 @@
 <dom-module>
     <style>
-        app-items > div {
+        .popover-sub-item > div {
+            background-color: rgb(103, 177, 100);
+        }
+        
+        iron-collapse > app-items > div {
+            background-color: #4caf50;
+            color: white !important;
+        }
+        
+        .popover-item > div {
             background-color: #4caf50;
             color: white !important;
         }
     </style>
     <template id="app-icon-button">
-        <paper-icon-button on-click="changeStatus" icon="{{icon}}"></paper-icon-button>
+        <paper-icon-button on-click="toggltMenu" icon="{{icon}}"></paper-icon-button>
         <app-popover id="menu" direction="bottom">
-            <app-items name="修改狀態"></app-items>
-            <app-items name="修改名稱"></app-items>
+            <app-items class="popover-item" on-click="changeStatus" name="修改狀態"></app-items>
+            <iron-collapse id="changeStatus">
+                <app-items class="popover-sub-item" name="可借"></app-items>
+                <app-items class="popover-sub-item" name="借出"></app-items>
+                <app-items class="popover-sub-item" name="停借"></app-items>
+                <app-items class="popover-sub-item" name="損毀"></app-items>
+            </iron-collapse>
+            <app-items class="popover-item" on-click="changeName" name="修改名稱"></app-items>
+            <iron-collapse id="changeName">
+                <paper-input style="background-color: rgb(103, 177, 100);" label="器材名稱"></paper-input>
+            </iron-collapse>
         </app-popover>
     </template>
     <script>
@@ -20,8 +38,14 @@
             },
             behavier: [Polymer.PaperButtonBehavior],
             ready: function () {},
+            toggltMenu: function () {
+                this.$.menu.toggle();
+            },
             changeStatus: function () {
-                this.$.menu.show()
+                this.$.changeStatus.toggle()
+            },
+            changeName: function (e) {
+                this.$.changeName.toggle()
             }
         });
     </script>

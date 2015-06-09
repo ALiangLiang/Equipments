@@ -54,6 +54,10 @@
         Polymer({
             is: 'app-popover',
             properties: {
+                opened: {
+                    type: Boolean,
+                    value: false
+                },
                 direction: {
                     type: String,
                     observer: "director"
@@ -67,8 +71,6 @@
                 animationConfig: {
                     type: Object,
                     value: function () {
-                        console.log(this);
-                        console.log(this.delay);
                         return {
                             'entry': {
                                 name: 'fade-in-animation',
@@ -88,6 +90,8 @@
             ],
             ready: function () {
                 this.repositioning();
+                if (this.opened) this.show();
+                else this.hide();
             },
             director: function () {
                 switch (this.direction) {
@@ -132,9 +136,15 @@
                 this.repositioning();
                 this.$.popover.style.display = "block";
                 this.playAnimation("entry");
+                this.opened = true;
             },
             hide: function () {
                 this.$.popover.style.display = "none";
+                this.opened = false;
+            },
+            toggle: function () {
+                if (this.opened) this.hide();
+                else this.show();
             }
         });
     </script>
