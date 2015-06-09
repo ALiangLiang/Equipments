@@ -17,12 +17,13 @@
     <template id="app-icon-button">
         <paper-icon-button on-click="toggltMenu" icon="{{icon}}"></paper-icon-button>
         <app-popover id="menu" direction="bottom">
+            <iron-overlay-backdrop on-click="outfield"></iron-overlay-backdrop>
             <app-items class="popover-item" on-click="changeStatus" name="修改狀態"></app-items>
             <iron-collapse id="changeStatus">
                 <app-items class="popover-sub-item" name="可借"></app-items>
                 <app-items class="popover-sub-item" name="借出"></app-items>
                 <app-items class="popover-sub-item" name="停借"></app-items>
-                <app-items class="popover-sub-item" name="損毀"></app-items>
+                <app-items class="popover-sub-item" name="損壞"></app-items>
             </iron-collapse>
             <app-items class="popover-item" on-click="changeName" name="修改名稱"></app-items>
             <iron-collapse id="changeName">
@@ -37,15 +38,20 @@
                 icon: String
             },
             behavier: [Polymer.PaperButtonBehavior],
-            ready: function () {},
+            ready: function () {
+                this.querySelector("iron-overlay-backdrop").prepare();
+            },
             toggltMenu: function () {
                 this.$.menu.toggle();
             },
             changeStatus: function () {
-                this.$.changeStatus.toggle()
+                this.$.changeStatus.toggle();
             },
             changeName: function (e) {
-                this.$.changeName.toggle()
+                this.$.changeName.toggle();
+            },
+            outfield: function () {
+                this.$.menu.hide();
             }
         });
     </script>
