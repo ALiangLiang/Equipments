@@ -19,7 +19,7 @@
         <app-popover id="menu" direction="bottom">
             <iron-overlay-backdrop on-click="outfield"></iron-overlay-backdrop>
             <app-items class="popover-item" on-click="changeStatus" name="修改狀態"></app-items>
-            <iron-collapse id="changeStatus">
+            <iron-collapse on-click="sendChange" id="changeStatus">
                 <app-items class="popover-sub-item" name="可借"></app-items>
                 <app-items class="popover-sub-item" name="借出"></app-items>
                 <app-items class="popover-sub-item" name="停借"></app-items>
@@ -30,6 +30,7 @@
                 <paper-input style="background-color: rgb(103, 177, 100);" label="器材名稱"></paper-input>
             </iron-collapse>
         </app-popover>
+        <iron-ajax verbose url="../Rear/changeStatus.php" method="POST" params='' handle-as="json" on-response="handleResponse" debounce-duration="300"></iron-ajax>
     </template>
     <script>
         Polymer({
@@ -52,6 +53,14 @@
             },
             outfield: function () {
                 this.$.menu.hide();
+            },
+            sendChange: function (e) {
+                var targetBtnValue = e.path[1].name,
+                    ajax = this.$$("iron-ajax");
+                ajax.generateRequest();
+            },
+            handleResponse: function () {
+                console.log(this.$$("iron-ajax").lastResponse);
             }
         });
     </script>
